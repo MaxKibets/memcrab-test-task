@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 import TableProvider from "./TableContext";
-import Field from "./Field";
+import Field from "./field/Field";
 
 const root = createRoot(document.getElementById("app"));
 
