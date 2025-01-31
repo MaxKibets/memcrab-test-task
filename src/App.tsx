@@ -10,8 +10,21 @@ const root = createRoot(document.getElementById("app"));
 
 root.render(
   <TableProvider>
-    <Field label="m" />
-    <Field label="n" />
-    <Field label="x" />
+    <Field
+      label="rows (m)"
+      id="rows"
+      onChange={(value) => console.log(value)}
+    />
+    <Field
+      label="cols (n)"
+      id="cols"
+      onChange={(value) => console.log(value)}
+    />
+    <Field
+      label="closest (x)"
+      id="closest"
+      onChange={(value) => console.log(value)}
+      delay={0}
+    />
   </TableProvider>,
 );
