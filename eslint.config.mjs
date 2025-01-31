@@ -13,6 +13,10 @@ export default [
   pluginReact.configs.flat.recommended,
   configPrettier,
   {
+    ignores: ["dist", "node_modules"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
     settings: {
       react: {
         version: "detect",
