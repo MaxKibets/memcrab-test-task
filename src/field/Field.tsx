@@ -1,30 +1,34 @@
-import React, { FC } from "react";
+import React, { ChangeEvent, FC, useCallback, useState } from "react";
 
 import debounce from "@/utils/debounce";
 
-import * as css from "./field.module.css";
+import FieldLayout from "./FieldLayout";
+import { FieldProps } from "./types";
 
-interface FieldProps {
-  label: string;
-  id: string;
-  onChange: (value: string) => void;
-  delay?: number;
-}
+const Field: FC<FieldProps> = ({
+  onChange,
+  delay = 500,
+  max,
+  value,
+  ...props
+}) => {
+  const [currentValue, setCurrentValue] = useState(value);
+  const onChangeDelayed = useCallback(debounce(onChange, delay), []);
 
-const Field: FC<FieldProps> = ({ label, id, onChange, delay = 500 }) => {
-  const handleChange = debounce(onChange, delay);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = Math.max(0, Math.min(max, Number(event.target.value)));
+
+    onChangeDelayed(newValue - value);
+    setCurrentValue(newValue);
+  };
 
   return (
-    <div className={css.wrap}>
-      <label htmlFor={id} className={css.label}>
-        {label}
-      </label>
-      <input
-        id={id}
-        type="number"
-        onChange={(event) => handleChange(event.target.value)}
-      />
-    </div>
+    <FieldLayout
+      value={currentValue < 1 ? "" : String(currentValue)}
+      onChange={handleChange}
+      max={max}
+      {...props}
+    />
   );
 };
 

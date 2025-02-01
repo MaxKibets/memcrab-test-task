@@ -8,10 +8,10 @@ const debounce = <T>(
 
   let timeoutId: NodeJS.Timeout;
 
-  return (...args) => {
+  return function (...args) {
     if (timeoutId) clearTimeout(timeoutId);
 
-    timeoutId = setTimeout(() => callback(...args), delay);
+    timeoutId = setTimeout(() => callback.apply(this, args), delay);
   };
 };
 

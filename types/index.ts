@@ -1,5 +1,16 @@
-export type WithChildren<T = object> = T & { children: React.ReactNode };
+// context
+export type AddRows = (count: number) => void;
+export type RemoveRows = (count: number) => void;
+export type AddCols = (count: number) => void;
+export type RemoveCols = (count: number) => void;
 
-export interface TableContextProps {
-  matrix: number[][];
+// field
+export type FieldOnChange = (value: number) => void;
+
+// table
+export type CellId = string;
+export type CellValue = number;
+export interface Cell {
+  id: CellId;
+  amount: CellValue;
 }

@@ -1,9 +1,23 @@
 .wrap {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
 
+  &:after,
   .label {
+    font-size: .8rem;
+    color: var(--gray);
     text-transform: uppercase;
+  }
+
+  &:after {
+    font-size: .6rem;
+    content: "max count: " attr(data-max);
+  }
+
+  .input {
+    padding: 0 .4rem;
+    border: 1px solid var(--black);
+    color: var(--black);
+    border-radius: var(--radius);
   }
 }

@@ -1,0 +1,10 @@
+.controls {
+  max-width: 35rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  border: 1px solid var(--gray);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}

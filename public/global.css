@@ -1,3 +1,9 @@
+:root {
+  --radius: .2rem;
+  --black: #222;
+  --gray: #666;
+}
+
 *,
 *::before,
 *::after {
@@ -60,6 +66,13 @@ select {
 
 body,
 html {
-  height: 100%;
+  min-height: 100%;
   scroll-behavior: smooth;
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--black);
 }
