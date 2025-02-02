@@ -1,6 +1,13 @@
-import { AddCols, AddRows, Cell, RemoveCols, RemoveRows } from "@/types";
+import {
+  AddCols,
+  AddRows,
+  Cell,
+  IncreaseAmount,
+  RemoveCols,
+  RemoveRows,
+} from "@/types";
 
-export type Matrix = Cell[][] | [];
+export type Matrix = Cell[][];
 
 export interface TableContextProps {
   matrix: Matrix;
@@ -8,4 +15,5 @@ export interface TableContextProps {
   removeRows?: RemoveRows;
   addCols?: AddCols;
   removeCols?: RemoveCols;
+  increaseAmount?: IncreaseAmount;
 }

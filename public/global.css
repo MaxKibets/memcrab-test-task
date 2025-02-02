@@ -2,6 +2,9 @@
   --radius: .2rem;
   --black: #222;
   --gray: #666;
+  --light-gray: #f1f1f1;
+  --white: #fff;
+  --light-green: #eafad8;
 }
 
 *,
@@ -75,4 +78,16 @@ html {
   font-size: 16px;
   line-height: 1.5;
   color: var(--black);
+}
+
+body {
+  padding: .5rem;
+  background-color: #e3e3e3;
+}
+
+#app {
+  display: grid;
+  gap: .5rem;
+  grid-template-areas: 'controls' 'content';
+  grid-template-rows: 5rem calc(100vh - (5rem + .5rem + .5rem + .5rem));
 }

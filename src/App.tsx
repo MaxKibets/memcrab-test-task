@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import "@/public/global.css";
 
 import TableProvider from "./tableContext/TableContext";
-import Table from "./table/Table";
+import TableContainer from "./tableContainer/TableContainer";
 import Controls from "./controls/Controls";
 
 const root = createRoot(document.getElementById("app"));
@@ -12,6 +12,6 @@ const root = createRoot(document.getElementById("app"));
 root.render(
   <TableProvider>
     <Controls />
-    <Table />
+    <TableContainer />
   </TableProvider>,
 );

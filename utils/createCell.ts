@@ -5,7 +5,7 @@ import { Cell } from "@/types";
 import getRandomNumber from "./getRandomNumber";
 
 const createCell = (): Cell => ({
-  // in documentation there should be a number
+  // in requirements there should be a number
   // and of course it can be done by Math.foor(Math.random() * 100000)
   // or Date.now()
   // but in this case it is a string

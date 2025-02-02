@@ -1,0 +1,34 @@
+.wrap {
+  max-width: 1000px;
+  max-height: 500px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto auto;
+  position: relative;
+  grid-area: content;
+  overflow: hidden;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--gray);
+  display: grid;
+  grid-template-areas:
+    "table rightBar"
+    "bottomBar .";
+  grid-template-rows: auto 2rem;
+  grid-template-columns: auto 4.5rem;
+  background-color: var(--light-gray);
+}
+
+.table {
+  display: flex;
+  grid-area: table;
+  background-color: var(--white);
+}
+
+.rightBar {
+  grid-area: rightBar;
+}
+
+.bottomBar {
+  grid-area: bottomBar;
+}

@@ -1,0 +1,14 @@
+.cell {
+  line-height: 2rem;
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.right {
+  border-right: 1px solid var(--gray);
+}
+
+.bottom {
+  border-bottom: 1px solid var(--gray);
+}

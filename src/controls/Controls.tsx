@@ -44,12 +44,14 @@ const Controls: FC = () => {
         onChange={handleColsChange}
         max={100}
       />
-      {/* <Field
+      <Field
         label="closest (x)"
         id="closest"
         onChange={(value) => console.log(value)}
         delay={0}
-      /> */}
+        value={0}
+        max={1}
+      />
     </ControlsLayout>
   );
 };

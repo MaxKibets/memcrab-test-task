@@ -1,6 +1,12 @@
-import React, { FC, ReactNode, createContext, useMemo } from "react";
+import React, { FC, ReactNode, createContext, useMemo, useState } from "react";
 
-import { AddCols, AddRows, RemoveCols, RemoveRows } from "@/types";
+import {
+  AddCols,
+  AddRows,
+  IncreaseAmount,
+  RemoveCols,
+  RemoveRows,
+} from "@/types";
 import createCell from "@/utils/createCell";
 
 import { Matrix, TableContextProps } from "./types";
@@ -12,7 +18,7 @@ export const TableContext = createContext<TableContextProps>({
 });
 
 const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [matrix, setMatrix] = React.useState(INITIAL_MATRIX);
+  const [matrix, setMatrix] = useState(INITIAL_MATRIX);
 
   const addRows: AddRows = (count) =>
     setMatrix((prevMatrix) => {
@@ -33,7 +39,9 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const addCols: AddCols = (count) =>
     setMatrix((prevMatrix) => {
-      return prevMatrix.map((row) => [
+      const newMatrix = prevMatrix.length ? prevMatrix : [[]];
+
+      return newMatrix.map((row) => [
         ...row,
         ...Array.from({ length: count }, () => createCell()),
       ]);
@@ -44,8 +52,24 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
       return prevMatrix.map((row) => row.slice(0, count));
     });
 
+  const increaseAmount: IncreaseAmount = (rowIndex, cellIndex) => {
+    setMatrix((prevMatrix) => {
+      const newMatrix = [...prevMatrix];
+      newMatrix[rowIndex][cellIndex].amount += 1;
+
+      return newMatrix;
+    });
+  };
+
   const contextValue = useMemo(
-    () => ({ matrix, addRows, removeRows, addCols, removeCols }),
+    () => ({
+      matrix,
+      addRows,
+      removeRows,
+      addCols,
+      removeCols,
+      increaseAmount,
+    }),
     [matrix],
   );
 
