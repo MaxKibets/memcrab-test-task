@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 
 import { VirtualGridRef } from "@/types";
 
@@ -9,17 +9,14 @@ import VirtualGrid from "../virtualGrid/VirtualGrid";
 const BottomBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
   const { matrix } = useTableContext();
 
-  const percentile = useMemo(() => {
-    if (!matrix.length) return [];
+  const percentile = matrix.at(0).map(
+    (_, colIndex) =>
+      matrix.reduce((acc, row) => {
+        return acc + row[colIndex].amount;
+      }, 0) / 2,
+  );
 
-    return matrix.at(0).map(
-      (_, colIndex) =>
-        matrix.reduce((acc, row) => {
-          return acc + row[colIndex].amount;
-        }, 0) / 2,
-    );
-  }, [matrix]);
-
+  console.log("BottomBar render");
   return (
     <VirtualGrid
       ref={ref}

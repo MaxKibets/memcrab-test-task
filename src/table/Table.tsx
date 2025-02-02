@@ -13,11 +13,19 @@ const Table: FC<{ onScroll: (props: GridOnScrollProps) => void }> = ({ onScroll 
       onScroll={onScroll}
       columnCount={matrix.at(0).length}
       rowCount={matrix.length}
-      cellRenderer={({ columnIndex, rowIndex, style }) => (
-        <Cell onClick={() => increaseAmount(rowIndex, columnIndex)} style={style}>
-          {matrix[rowIndex][columnIndex].amount}
-        </Cell>
-      )}
+      cellRenderer={({ columnIndex, rowIndex, style }) => {
+        const { amount, id } = matrix[rowIndex][columnIndex];
+
+        return (
+          <Cell
+            onClick={() => increaseAmount(rowIndex, columnIndex)}
+            style={style}
+            id={id}
+          >
+            {amount}
+          </Cell>
+        );
+      }}
     />
   );
 };

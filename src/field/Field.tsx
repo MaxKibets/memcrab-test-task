@@ -1,23 +1,11 @@
-import React, {
-  ChangeEvent,
-  FC,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { ChangeEvent, FC, memo, useCallback, useEffect, useState } from "react";
 
 import debounce from "@/utils/debounce";
 
 import FieldLayout from "./FieldLayout";
 import { FieldProps } from "./types";
 
-const Field: FC<FieldProps> = ({
-  onChange,
-  delay = 500,
-  max,
-  value,
-  ...props
-}) => {
+const Field: FC<FieldProps> = ({ onChange, delay = 500, max, value, ...props }) => {
   const [currentValue, setCurrentValue] = useState(null);
 
   useEffect(() => {
@@ -34,6 +22,7 @@ const Field: FC<FieldProps> = ({
     setCurrentValue(newValue);
   };
 
+  console.log("Field render");
   return (
     <FieldLayout
       value={currentValue < 1 ? "" : String(currentValue)}
@@ -44,4 +33,4 @@ const Field: FC<FieldProps> = ({
   );
 };
 
-export default Field;
+export default memo(Field);

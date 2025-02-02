@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 
 import { FieldOnChange } from "@/types";
 
@@ -8,24 +8,23 @@ import Field from "../field/Field";
 import ControlsLayout from "./ControlsLayout";
 
 const Controls: FC = () => {
-  const { matrix, addRows, removeRows, addCols, removeCols } =
-    useTableContext();
+  const { matrix, addRows, removeRows, addCols, removeCols } = useTableContext();
 
-  const handleRowsChange: FieldOnChange = (value) => {
+  const handleRowsChange: FieldOnChange = useCallback((value) => {
     if (value < 0) {
       removeRows(value);
     } else {
       addRows(value);
     }
-  };
+  }, []);
 
-  const handleColsChange: FieldOnChange = (value) => {
+  const handleColsChange: FieldOnChange = useCallback((value) => {
     if (value < 0) {
       removeCols(value);
     } else {
       addCols(value);
     }
-  };
+  }, []);
 
   console.log("Controls render");
   return (
@@ -47,7 +46,7 @@ const Controls: FC = () => {
       <Field
         label="closest (x)"
         id="closest"
-        onChange={(value) => console.log(value)}
+        onChange={(value) => console.log("TODO inmplement closest", value)}
         delay={0}
         value={0}
         max={1}
