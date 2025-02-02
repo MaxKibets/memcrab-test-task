@@ -3,11 +3,8 @@
 import { RefObject } from "react";
 import { FixedSizeGrid } from "react-window";
 
-// TODO reorganize types, the same...
-export type AddRows = (count: number) => void;
-export type RemoveRows = (count: number) => void;
-export type AddCols = (count: number) => void;
-export type RemoveCols = (count: number) => void;
+export type ModifyByCount = (count: number) => void;
+export type RemoveByIndex = (index: number) => void;
 export type IncreaseAmount = (rowIndex: number, cellIndex: number) => void;
 
 // field

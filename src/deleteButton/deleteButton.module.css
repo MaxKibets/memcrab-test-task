@@ -1,0 +1,18 @@
+.button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  border: 1px solid var(--gray);
+  border-radius: var(--radius);
+  width: .8rem;
+  height: .8rem;
+  font-size: .5rem;
+  line-height: 1;
+  background-color: var(--red);
+  opacity: 0;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.3);
+  }
+}

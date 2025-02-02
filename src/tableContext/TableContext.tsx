@@ -1,12 +1,6 @@
 import React, { FC, ReactNode, createContext, useMemo, useState } from "react";
 
-import {
-  AddCols,
-  AddRows,
-  IncreaseAmount,
-  RemoveCols,
-  RemoveRows,
-} from "@/types";
+import { ModifyByCount, RemoveByIndex, IncreaseAmount } from "@/types";
 import createCell from "@/utils/createCell";
 
 import { Matrix, TableContextProps } from "./types";
@@ -20,7 +14,7 @@ export const TableContext = createContext<TableContextProps>({
 const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [matrix, setMatrix] = useState(INITIAL_MATRIX);
 
-  const addRows: AddRows = (count) =>
+  const addRows: ModifyByCount = (count) =>
     setMatrix((prevMatrix) => {
       const colsCount = prevMatrix.at(0)?.length || 0;
 
@@ -32,12 +26,16 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
       ];
     });
 
-  const removeRows: RemoveRows = (count) =>
+  const removeRows: ModifyByCount = (count) =>
     setMatrix((prevMatrix) => {
       return prevMatrix.slice(0, count);
     });
 
-  const addCols: AddCols = (count) =>
+  const removeRow: RemoveByIndex = (index) => {
+    setMatrix((prevMatrix) => prevMatrix.filter((_, rowIndex) => rowIndex !== index));
+  };
+
+  const addCols: ModifyByCount = (count) =>
     setMatrix((prevMatrix) => {
       const newMatrix = prevMatrix.length ? prevMatrix : [[]];
 
@@ -47,7 +45,13 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
       ]);
     });
 
-  const removeCols: RemoveCols = (count) =>
+  const removeCol: RemoveByIndex = (index) => {
+    setMatrix((prevMatrix) =>
+      prevMatrix.map((row) => row.filter((_, colIndex) => colIndex !== index)),
+    );
+  };
+
+  const removeCols: ModifyByCount = (count) =>
     setMatrix((prevMatrix) => {
       return prevMatrix.map((row) => row.slice(0, count));
     });
@@ -65,19 +69,17 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
     () => ({
       matrix,
       addRows,
+      removeRow,
       removeRows,
       addCols,
+      removeCol,
       removeCols,
       increaseAmount,
     }),
     [matrix],
   );
 
-  return (
-    <TableContext.Provider value={contextValue}>
-      {children}
-    </TableContext.Provider>
-  );
+  return <TableContext.Provider value={contextValue}>{children}</TableContext.Provider>;
 };
 
 export default TableProvider;

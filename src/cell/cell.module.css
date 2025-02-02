@@ -5,6 +5,9 @@
 
   cursor: pointer;
 
+  &:hover button {
+    opacity: 1;
+  }
 }
 
 [data-precent]::after {

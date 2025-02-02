@@ -1,19 +1,14 @@
-import {
-  AddCols,
-  AddRows,
-  Cell,
-  IncreaseAmount,
-  RemoveCols,
-  RemoveRows,
-} from "@/types";
+import { Cell, IncreaseAmount, ModifyByCount, RemoveByIndex } from "@/types";
 
 export type Matrix = Cell[][];
 
 export interface TableContextProps {
   matrix: Matrix;
-  addRows?: AddRows;
-  removeRows?: RemoveRows;
-  addCols?: AddCols;
-  removeCols?: RemoveCols;
+  addRows?: ModifyByCount;
+  removeRow?: RemoveByIndex;
+  removeRows?: ModifyByCount;
+  addCols?: ModifyByCount;
+  removeCol?: RemoveByIndex;
+  removeCols?: ModifyByCount;
   increaseAmount?: IncreaseAmount;
 }

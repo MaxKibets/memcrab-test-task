@@ -5,9 +5,10 @@ import { VirtualGridRef } from "@/types";
 import Cell from "../cell/Cell";
 import { useTableContext } from "../tableContext/hooks";
 import VirtualGrid from "../virtualGrid/VirtualGrid";
+import DeleteButton from "../deleteButton/DeleteButton";
 
 const BottomBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
-  const { matrix } = useTableContext();
+  const { matrix, removeCol } = useTableContext();
 
   const percentile = matrix.at(0).map(
     (_, colIndex) =>
@@ -26,6 +27,7 @@ const BottomBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
       cellRenderer={({ columnIndex, style }) => (
         <Cell style={style} border="right">
           {percentile[columnIndex]}
+          <DeleteButton onClick={() => removeCol(columnIndex)} title="delete column" />
         </Cell>
       )}
     />

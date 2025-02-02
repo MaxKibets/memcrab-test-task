@@ -5,9 +5,10 @@ import { VirtualGridRef } from "@/types";
 import Cell from "../cell/Cell";
 import { useTableContext } from "../tableContext/hooks";
 import VirtualGrid from "../virtualGrid/VirtualGrid";
+import DeleteButton from "../deleteButton/DeleteButton";
 
 const RightBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
-  const { matrix } = useTableContext();
+  const { matrix, removeRow } = useTableContext();
   const visibleCellsRef = useRef([]);
 
   const totalSum = useMemo(
@@ -17,10 +18,11 @@ const RightBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
 
   const handleMouseEnter = (rowIndex: number) => {
     const row = matrix[rowIndex];
+    const elems = document.querySelectorAll(
+      row.map((cell) => `[data-id="${cell.id}"]`).join(","),
+    );
 
-    visibleCellsRef.current = Array.from(
-      document.querySelectorAll(row.map((cell) => `[data-id="${cell.id}"]`).join(",")),
-    )
+    visibleCellsRef.current = Array.from(elems)
       .filter((elem) => elem !== null)
       .map((elem: HTMLElement, index) => {
         const { amount } = row[index];
@@ -37,6 +39,7 @@ const RightBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
 
   const handleMouseLeave = () => {
     if (!visibleCellsRef.current) return;
+
     visibleCellsRef.current.forEach((elem) => {
       delete elem.dataset.precent;
     });
@@ -57,6 +60,7 @@ const RightBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
           border="bottom"
         >
           {totalSum[rowIndex]}
+          <DeleteButton onClick={() => removeRow(rowIndex)} title="delete row" />
         </Cell>
       )}
     />
