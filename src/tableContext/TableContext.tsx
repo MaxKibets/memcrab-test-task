@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, createContext, useMemo, useState } from "react";
+import React, { FC, ReactNode, createContext, useState } from "react";
 
 import { ModifyByCount, RemoveByIndex, IncreaseAmount } from "@/types";
 import createCell from "@/utils/createCell";
@@ -13,6 +13,7 @@ export const TableContext = createContext<TableContextProps>({
 
 const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [matrix, setMatrix] = useState(INITIAL_MATRIX);
+  const [nearestCount, setNearestCount] = useState(0);
 
   const addRows: ModifyByCount = (count) =>
     setMatrix((prevMatrix) => {
@@ -27,9 +28,7 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
     });
 
   const removeRows: ModifyByCount = (count) =>
-    setMatrix((prevMatrix) => {
-      return prevMatrix.slice(0, count);
-    });
+    setMatrix((prevMatrix) => prevMatrix.slice(0, count));
 
   const removeRow: RemoveByIndex = (index) => {
     setMatrix((prevMatrix) => prevMatrix.filter((_, rowIndex) => rowIndex !== index));
@@ -45,11 +44,10 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
       ]);
     });
 
-  const removeCol: RemoveByIndex = (index) => {
+  const removeCol: RemoveByIndex = (index) =>
     setMatrix((prevMatrix) =>
       prevMatrix.map((row) => row.filter((_, colIndex) => colIndex !== index)),
     );
-  };
 
   const removeCols: ModifyByCount = (count) =>
     setMatrix((prevMatrix) => {
@@ -65,21 +63,24 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
     });
   };
 
-  const contextValue = useMemo(
-    () => ({
-      matrix,
-      addRows,
-      removeRow,
-      removeRows,
-      addCols,
-      removeCol,
-      removeCols,
-      increaseAmount,
-    }),
-    [matrix],
+  return (
+    <TableContext.Provider
+      value={{
+        matrix,
+        addRows,
+        removeRow,
+        removeRows,
+        addCols,
+        removeCol,
+        removeCols,
+        increaseAmount,
+        setNearestCount,
+        nearestCount,
+      }}
+    >
+      {children}
+    </TableContext.Provider>
   );
-
-  return <TableContext.Provider value={contextValue}>{children}</TableContext.Provider>;
 };
 
 export default TableProvider;

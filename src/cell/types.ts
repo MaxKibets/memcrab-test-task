@@ -10,4 +10,5 @@ export interface CellProps {
   id?: CellId;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  isHighlighted?: boolean;
 }

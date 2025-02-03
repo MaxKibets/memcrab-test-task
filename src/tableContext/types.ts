@@ -11,4 +11,6 @@ export interface TableContextProps {
   removeCol?: RemoveByIndex;
   removeCols?: ModifyByCount;
   increaseAmount?: IncreaseAmount;
+  setNearestCount?: (value: number) => void;
+  nearestCount?: number;
 }

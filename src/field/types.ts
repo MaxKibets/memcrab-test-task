@@ -2,6 +2,8 @@ import { ChangeEvent } from "react";
 
 import { FieldOnChange } from "@/types";
 
+export type OnChange = (event: ChangeEvent<HTMLInputElement>) => void;
+
 export interface FieldProps {
   onChange: FieldOnChange;
   delay?: number;
@@ -13,6 +15,6 @@ export interface FieldProps {
 
 export interface FieldLayoutProps
   extends Omit<FieldProps, "onChange" | "delay" | "value"> {
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: OnChange;
   value: string;
 }

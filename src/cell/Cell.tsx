@@ -10,6 +10,7 @@ const Cell: FC<CellProps> = ({
   onClick,
   onMouseEnter,
   onMouseLeave,
+  isHighlighted,
   id,
 }) => {
   // TODO should think about memoization...
@@ -19,7 +20,7 @@ const Cell: FC<CellProps> = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       style={style}
-      className={`${css.cell} ${css[border] || ""}`}
+      className={`${css.cell} ${css[border] || ""} ${isHighlighted ? css.highlighted : ""}`}
       data-id={id}
     >
       {children}

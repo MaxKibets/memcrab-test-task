@@ -10,14 +10,18 @@
   }
 }
 
-[data-precent]::after {
+[data-percent]::after {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  content: attr(data-precent) "%";
-  filter: contrast(attr(data-precent));
+  content: attr(data-percent) "%";
+  filter: contrast(attr(data-percent));
   background-color: var(--red);
+}
+
+.highlighted {
+  background-color: var(--light-green);
 }
 
 .right {

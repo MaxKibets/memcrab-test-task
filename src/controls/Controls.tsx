@@ -8,7 +8,8 @@ import Field from "../field/Field";
 import ControlsLayout from "./ControlsLayout";
 
 const Controls: FC = () => {
-  const { matrix, addRows, removeRows, addCols, removeCols } = useTableContext();
+  const { matrix, addRows, removeRows, addCols, removeCols, setNearestCount } =
+    useTableContext();
 
   const handleRowsChange: FieldOnChange = useCallback((value) => {
     if (value < 0) {
@@ -26,7 +27,8 @@ const Controls: FC = () => {
     }
   }, []);
 
-  console.log("Controls render");
+  const handleNerestChange: FieldOnChange = useCallback(setNearestCount, []);
+
   return (
     <ControlsLayout>
       <Field
@@ -46,10 +48,10 @@ const Controls: FC = () => {
       <Field
         label="closest (x)"
         id="closest"
-        onChange={(value) => console.log("TODO inmplement closest", value)}
+        onChange={handleNerestChange}
         delay={0}
         value={0}
-        max={1}
+        max={Math.max(0, matrix.length * (matrix.at(0)?.length || 0) - 1)}
       />
     </ControlsLayout>
   );
