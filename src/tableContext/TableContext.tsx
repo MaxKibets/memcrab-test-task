@@ -54,14 +54,13 @@ const TableProvider: FC<{ children: ReactNode }> = ({ children }) => {
       return prevMatrix.map((row) => row.slice(0, count));
     });
 
-  const increaseAmount: IncreaseAmount = (rowIndex, cellIndex) => {
+  const increaseAmount: IncreaseAmount = (rowIndex, cellIndex) =>
     setMatrix((prevMatrix) => {
       const newMatrix = [...prevMatrix];
       newMatrix[rowIndex][cellIndex].amount += 1;
 
       return newMatrix;
     });
-  };
 
   return (
     <TableContext.Provider

@@ -12,20 +12,17 @@ const Cell: FC<CellProps> = ({
   onMouseLeave,
   isHighlighted,
   id,
-}) => {
-  // TODO should think about memoization...
-  return (
-    <div
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      style={style}
-      className={`${css.cell} ${css[border] || ""} ${isHighlighted ? css.highlighted : ""}`}
-      data-id={id}
-    >
-      {children}
-    </div>
-  );
-};
+}) => (
+  <div
+    onClick={onClick}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+    style={style}
+    className={`${css.cell} ${css[border] || ""} ${isHighlighted ? css.highlighted : ""}`}
+    data-id={id}
+  >
+    {children}
+  </div>
+);
 
 export default Cell;

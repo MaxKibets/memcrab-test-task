@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useRef } from "react";
 import { GridOnScrollProps } from "react-window";
 
 import { useTableContext } from "../tableContext/hooks";
@@ -8,27 +8,25 @@ import { CellId, CellValue } from "@/types";
 
 const Table: FC<{ onScroll: (props: GridOnScrollProps) => void }> = ({ onScroll }) => {
   const { matrix, increaseAmount, nearestCount } = useTableContext();
-  const [highlightedCells, setHighlightedCells] = useState<Set<CellId>>(new Set());
+  const highlightedCellsRef = useRef(null);
 
   const handleMouseEnter = (id: CellId, amount: CellValue) => {
-    setHighlightedCells(
-      new Set(
-        matrix
-          .flat()
-          .map((cell) => ({
-            ...cell,
-            difference: Math.abs(cell.amount - amount),
-          }))
-          .filter((cell) => cell.id !== id)
-          .sort((a, b) => a.difference - b.difference)
-          .slice(0, nearestCount)
-          .map((cell) => cell.id),
-      ),
+    highlightedCellsRef.current = new Set(
+      matrix
+        .flat()
+        .map((cell) => ({
+          ...cell,
+          difference: Math.abs(cell.amount - amount),
+        }))
+        .filter((cell) => cell.id !== id)
+        .sort((a, b) => a.difference - b.difference)
+        .slice(0, nearestCount)
+        .map((cell) => cell.id),
     );
   };
 
   const handleMouseLeave = () => {
-    setHighlightedCells(new Set());
+    highlightedCellsRef.current = null;
   };
 
   return (
@@ -46,7 +44,7 @@ const Table: FC<{ onScroll: (props: GridOnScrollProps) => void }> = ({ onScroll 
             onMouseLeave={handleMouseLeave}
             style={style}
             id={id}
-            isHighlighted={highlightedCells.has(id)}
+            isHighlighted={highlightedCellsRef.current?.has(id)}
           >
             {amount}
           </Cell>

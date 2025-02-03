@@ -1,5 +1,7 @@
 import React, { FC, useMemo, useRef, useCallback } from "react";
+
 import { VirtualGridRef } from "@/types";
+
 import Cell from "../cell/Cell";
 import { useTableContext } from "../tableContext/hooks";
 import VirtualGrid from "../virtualGrid/VirtualGrid";
@@ -7,7 +9,7 @@ import DeleteButton from "../deleteButton/DeleteButton";
 
 const RightBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
   const { matrix, removeRow } = useTableContext();
-  const visibleCellsRef = useRef<HTMLElement[]>([]);
+  const visibleCellsRef = useRef([]);
 
   const totalSum = useMemo(
     () => matrix.map((row) => row.reduce((acc, { amount }) => acc + amount, 0)),
@@ -25,6 +27,7 @@ const RightBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
         const elem = document.querySelector(
           `[data-id="${cell.id}"]`,
         ) as HTMLElement | null;
+
         if (elem) {
           const percent = Math.floor((cell.amount / maxAmount) * 100);
           elem.dataset.percent = percent.toString();
