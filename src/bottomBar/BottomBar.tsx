@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import { VirtualGridRef } from "@/types";
 
@@ -10,14 +10,17 @@ import DeleteButton from "../deleteButton/DeleteButton";
 const BottomBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
   const { matrix, removeCol } = useTableContext();
 
-  const percentile = matrix.at(0).map(
-    (_, colIndex) =>
-      matrix.reduce((acc, row) => {
-        return acc + row[colIndex].amount;
-      }, 0) / 2,
+  const percentile = useMemo(
+    () =>
+      matrix.at(0).map(
+        (_, colIndex) =>
+          matrix.reduce((acc, row) => {
+            return acc + row[colIndex].amount;
+          }, 0) / 2,
+      ),
+    [matrix],
   );
 
-  console.log("BottomBar render");
   return (
     <VirtualGrid
       ref={ref}

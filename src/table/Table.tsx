@@ -1,32 +1,51 @@
 import React, { FC, useRef } from "react";
 import { GridOnScrollProps } from "react-window";
 
+import { CellId, CellValue } from "@/types";
+
 import { useTableContext } from "../tableContext/hooks";
 import Cell from "../cell/Cell";
 import VirtualGrid from "../virtualGrid/VirtualGrid";
-import { CellId, CellValue } from "@/types";
 
 const Table: FC<{ onScroll: (props: GridOnScrollProps) => void }> = ({ onScroll }) => {
   const { matrix, increaseAmount, nearestCount } = useTableContext();
-  const highlightedCellsRef = useRef(null);
+  const highlightedCellsRef = useRef([]);
 
-  const handleMouseEnter = (id: CellId, amount: CellValue) => {
-    highlightedCellsRef.current = new Set(
-      matrix
-        .flat()
-        .map((cell) => ({
-          ...cell,
-          difference: Math.abs(cell.amount - amount),
-        }))
-        .filter((cell) => cell.id !== id)
-        .sort((a, b) => a.difference - b.difference)
-        .slice(0, nearestCount)
-        .map((cell) => cell.id),
-    );
+  const handleMouseEnter = ({
+    currentId,
+    currentAmount,
+  }: {
+    currentId: CellId;
+    currentAmount: CellValue;
+  }) => {
+    if (!nearestCount) return;
+
+    const highlightedCells = matrix
+      .flat()
+      .map((cell) => ({
+        ...cell,
+        difference: Math.abs(cell.amount - currentAmount),
+      }))
+      .filter((cell) => cell.id !== currentId)
+      .sort((a, b) => a.difference - b.difference)
+      .slice(0, nearestCount)
+      .map(({ id }) => document.querySelector(`[data-id="${id}"]`) as HTMLElement);
+
+    highlightedCells.forEach((elem) => {
+      if (elem) elem.dataset.nearest = "true";
+    });
+
+    highlightedCellsRef.current = highlightedCells;
   };
 
   const handleMouseLeave = () => {
-    highlightedCellsRef.current = null;
+    if (!highlightedCellsRef.current || !nearestCount) return;
+
+    highlightedCellsRef.current.forEach((elem) => {
+      if (elem) delete elem.dataset.nearest;
+    });
+
+    highlightedCellsRef.current = [];
   };
 
   return (
@@ -40,11 +59,15 @@ const Table: FC<{ onScroll: (props: GridOnScrollProps) => void }> = ({ onScroll 
         return (
           <Cell
             onClick={() => increaseAmount(rowIndex, columnIndex)}
-            onMouseEnter={() => handleMouseEnter(id, amount)}
+            onMouseEnter={() =>
+              handleMouseEnter({
+                currentAmount: amount,
+                currentId: id,
+              })
+            }
             onMouseLeave={handleMouseLeave}
             style={style}
             id={id}
-            isHighlighted={highlightedCellsRef.current?.has(id)}
           >
             {amount}
           </Cell>

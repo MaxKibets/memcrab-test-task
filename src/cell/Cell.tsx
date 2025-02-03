@@ -10,7 +10,6 @@ const Cell: FC<CellProps> = ({
   onClick,
   onMouseEnter,
   onMouseLeave,
-  isHighlighted,
   id,
 }) => (
   <div
@@ -18,7 +17,7 @@ const Cell: FC<CellProps> = ({
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
     style={style}
-    className={`${css.cell} ${css[border] || ""} ${isHighlighted ? css.highlighted : ""}`}
+    className={`${css.cell} ${css[border] || ""}`}
     data-id={id}
   >
     {children}

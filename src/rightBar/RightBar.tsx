@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useRef, useCallback } from "react";
+import React, { FC, useMemo, useRef } from "react";
 
 import { VirtualGridRef } from "@/types";
 
@@ -16,36 +16,31 @@ const RightBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
     [matrix],
   );
 
-  const handleMouseEnter = useCallback(
-    (rowIndex: number) => {
-      const row = matrix[rowIndex];
-      const maxAmount = Math.max(...row.map(({ amount }) => amount));
+  const handleMouseEnter = (rowIndex: number) => {
+    const row = matrix[rowIndex];
+    const maxAmount = Math.max(...row.map(({ amount }) => amount));
 
-      visibleCellsRef.current = [];
+    visibleCellsRef.current = [];
 
-      row.forEach((cell) => {
-        const elem = document.querySelector(
-          `[data-id="${cell.id}"]`,
-        ) as HTMLElement | null;
+    row.forEach((cell) => {
+      const elem = document.querySelector(`[data-id="${cell.id}"]`) as HTMLElement | null;
 
-        if (elem) {
-          const percent = Math.floor((cell.amount / maxAmount) * 100);
-          elem.dataset.percent = percent.toString();
-          elem.style.filter = `saturate(${percent}%)`;
-          visibleCellsRef.current.push(elem);
-        }
-      });
-    },
-    [matrix],
-  );
+      if (elem) {
+        const percent = Math.floor((cell.amount / maxAmount) * 100);
+        elem.dataset.percent = percent.toString();
+        elem.style.filter = `saturate(${percent}%)`;
+        visibleCellsRef.current.push(elem);
+      }
+    });
+  };
 
-  const handleMouseLeave = useCallback(() => {
+  const handleMouseLeave = () => {
     visibleCellsRef.current.forEach((elem) => {
       delete elem.dataset.percent;
       elem.style.filter = "none";
     });
     visibleCellsRef.current = [];
-  }, []);
+  };
 
   return (
     <VirtualGrid

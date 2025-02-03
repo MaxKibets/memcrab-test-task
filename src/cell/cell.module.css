@@ -20,6 +20,7 @@
   background-color: var(--red);
 }
 
+[data-nearest],
 .highlighted {
   background-color: var(--light-green);
 }
