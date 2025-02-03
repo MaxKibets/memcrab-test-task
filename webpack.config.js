@@ -5,8 +5,8 @@ module.exports = {
   entry: "./src/App.tsx",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-    publicPath: "/memcrab-test-task/",
+    filename: "bundle.[contenthash].js",
+    // publicPath: "/memcrab-test-task/",
     clean: true,
   },
   module: {
