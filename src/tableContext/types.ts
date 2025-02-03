@@ -1,6 +1,4 @@
-import { Cell, IncreaseAmount, ModifyByCount, RemoveByIndex } from "@/types";
-
-export type Matrix = Cell[][];
+import { Matrix, IncreaseAmount, ModifyByCount, RemoveByIndex } from "@/types";
 
 export interface TableContextProps {
   matrix: Matrix;

@@ -1,52 +1,51 @@
-import React, { FC, useRef } from "react";
+import React, { FC } from "react";
 import { GridOnScrollProps } from "react-window";
 
-import { CellId, CellValue } from "@/types";
-
 import { useTableContext } from "../tableContext/hooks";
-import Cell from "../cell/Cell";
 import VirtualGrid from "../virtualGrid/VirtualGrid";
+import HighlightedCell from "../highlightedCell/HighlightedCell";
 
 const Table: FC<{ onScroll: (props: GridOnScrollProps) => void }> = ({ onScroll }) => {
-  const { matrix, increaseAmount, nearestCount } = useTableContext();
-  const highlightedCellsRef = useRef([]);
+  const { matrix } = useTableContext();
 
-  const handleMouseEnter = ({
-    currentId,
-    currentAmount,
-  }: {
-    currentId: CellId;
-    currentAmount: CellValue;
-  }) => {
-    if (!nearestCount) return;
+  // const highlightedCellsRef = useRef([]);
 
-    const highlightedCells = matrix
-      .flat()
-      .map((cell) => ({
-        ...cell,
-        difference: Math.abs(cell.amount - currentAmount),
-      }))
-      .filter((cell) => cell.id !== currentId)
-      .sort((a, b) => a.difference - b.difference)
-      .slice(0, nearestCount)
-      .map(({ id }) => document.querySelector(`[data-id="${id}"]`) as HTMLElement);
+  // const handleMouseEnter = ({
+  //   currentId,
+  //   currentAmount,
+  // }: {
+  //   currentId: CellId;
+  //   currentAmount: CellValue;
+  // }) => {
+  //   if (!nearestCount) return;
 
-    highlightedCells.forEach((elem) => {
-      if (elem) elem.dataset.nearest = "true";
-    });
+    // const highlightedCells = matrix
+    //   .flat()
+    //   .map((cell) => ({
+    //     ...cell,
+    //     difference: Math.abs(cell.amount - currentAmount),
+    //   }))
+    //   .filter((cell) => cell.id !== currentId)
+    //   .sort((a, b) => a.difference - b.difference)
+    //   .slice(0, nearestCount)
+    //   .map(({ id }) => document.querySelector(`[data-id="${id}"]`) as HTMLElement);
 
-    highlightedCellsRef.current = highlightedCells;
-  };
+  //   highlightedCells.forEach((elem) => {
+  //     if (elem) elem.dataset.nearest = "true";
+  //   });
 
-  const handleMouseLeave = () => {
-    if (!highlightedCellsRef.current || !nearestCount) return;
+  //   highlightedCellsRef.current = highlightedCells;
+  // };
 
-    highlightedCellsRef.current.forEach((elem) => {
-      if (elem) delete elem.dataset.nearest;
-    });
+  // const handleMouseLeave = () => {
+  //   if (!highlightedCellsRef.current || !nearestCount) return;
 
-    highlightedCellsRef.current = [];
-  };
+  //   highlightedCellsRef.current.forEach((elem) => {
+  //     if (elem) delete elem.dataset.nearest;
+  //   });
+
+  //   highlightedCellsRef.current = [];
+  // };
 
   return (
     <VirtualGrid
@@ -57,20 +56,15 @@ const Table: FC<{ onScroll: (props: GridOnScrollProps) => void }> = ({ onScroll 
         const { amount, id } = matrix[rowIndex][columnIndex];
 
         return (
-          <Cell
-            onClick={() => increaseAmount(rowIndex, columnIndex)}
-            onMouseEnter={() =>
-              handleMouseEnter({
-                currentAmount: amount,
-                currentId: id,
-              })
-            }
-            onMouseLeave={handleMouseLeave}
-            style={style}
+          <HighlightedCell
             id={id}
+            rowIndex={rowIndex}
+            columnIndex={columnIndex}
+            amount={amount}
+            style={style}
           >
             {amount}
-          </Cell>
+          </HighlightedCell>
         );
       }}
     />

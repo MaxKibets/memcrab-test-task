@@ -10,17 +10,7 @@
   }
 }
 
-[data-percent]::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  content: attr(data-percent) "%";
-  filter: contrast(attr(data-percent));
-  background-color: var(--red);
-}
-
-[data-nearest] {
+.highlighted {
   background-color: var(--light-green);
 }
 

@@ -1,6 +1,6 @@
 // context
 
-import { RefObject } from "react";
+import { CSSProperties, ReactNode, RefObject } from "react";
 import { FixedSizeGrid } from "react-window";
 
 export type ModifyByCount = (count: number) => void;
@@ -20,3 +20,15 @@ export interface Cell {
 }
 
 export type VirtualGridRef = RefObject<FixedSizeGrid>;
+
+export interface CellProps {
+  children: ReactNode;
+  style: CSSProperties;
+  border?: "right" | "bottom";
+  onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  highlighted?: boolean;
+}
+
+export type Matrix = Cell[][];

@@ -1,9 +1,9 @@
 import React, { FC, ReactNode, createContext, useState } from "react";
 
-import { ModifyByCount, RemoveByIndex, IncreaseAmount } from "@/types";
+import { ModifyByCount, RemoveByIndex, IncreaseAmount, Matrix } from "@/types";
 import createCell from "@/utils/createCell";
 
-import { Matrix, TableContextProps } from "./types";
+import { TableContextProps } from "./types";
 
 const INITIAL_MATRIX: Matrix = [];
 

@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
-import { CellProps } from "./types";
+import { CellProps } from "@/types";
+
 import * as css from "./cell.module.css";
 
 const Cell: FC<CellProps> = ({
@@ -10,15 +11,14 @@ const Cell: FC<CellProps> = ({
   onClick,
   onMouseEnter,
   onMouseLeave,
-  id,
+  highlighted,
 }) => (
   <div
     onClick={onClick}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
     style={style}
-    className={`${css.cell} ${css[border] || ""}`}
-    data-id={id}
+    className={`${css.cell} ${css[border] || ""} ${highlighted ? css.highlighted : ""}`}
   >
     {children}
   </div>
