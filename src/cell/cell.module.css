@@ -12,6 +12,7 @@
 
 .highlighted {
   background-color: var(--light-green);
+  filter: saturate(0);
 }
 
 .right {
