@@ -1,6 +1,6 @@
-import { Cell, Matrix } from "@/types";
-
 import React, { createContext, FC, ReactNode, useState } from "react";
+
+import { Cell, Matrix } from "@/types";
 
 export const NearestHighlightContext = createContext(null);
 
@@ -16,7 +16,7 @@ export const NearestHighlightProvider: FC<{ children: ReactNode }> = ({ children
     hoveredCell: Cell;
     nearestCount: number;
   }) => {
-    if (!hoveredCell) return new Set();
+    if (!hoveredCell) return;
 
     setNearests(
       new Set(

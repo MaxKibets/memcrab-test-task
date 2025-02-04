@@ -20,7 +20,7 @@ const HighlightedCell: FC<HighlightedCellProps> = ({
   const { nearests, calculateNearest, setNearests } = useNearestHighlightContext();
 
   const percent = useMemo(() => {
-    if (highlightedRow !== rowIndex) return "0";
+    if (highlightedRow !== rowIndex) return 0;
 
     return (
       Math.floor(

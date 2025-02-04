@@ -1,4 +1,4 @@
-import React, { StrictMode } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 
 import "@/public/global.css";
@@ -12,14 +12,12 @@ import { NearestHighlightProvider } from "./nearestHighlightContext/NearestHighl
 const root = createRoot(document.getElementById("app"));
 
 root.render(
-  <StrictMode>
-    <TableProvider>
-      <Controls />
-      <RowHighlightProvider>
-        <NearestHighlightProvider>
-          <TableContainer />
-        </NearestHighlightProvider>
-      </RowHighlightProvider>
-    </TableProvider>
-  </StrictMode>,
+  <TableProvider>
+    <Controls />
+    <RowHighlightProvider>
+      <NearestHighlightProvider>
+        <TableContainer />
+      </NearestHighlightProvider>
+    </RowHighlightProvider>
+  </TableProvider>,
 );

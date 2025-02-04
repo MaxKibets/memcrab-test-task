@@ -1,24 +1,23 @@
-import React, { FC, useMemo } from "react";
-
-import { VirtualGridRef } from "@/types";
+import React, { FC } from "react";
 
 import Cell from "../cell/Cell";
 import { useTableContext } from "../tableContext/hooks";
 import VirtualGrid from "../virtualGrid/VirtualGrid";
 import DeleteButton from "../deleteButton/DeleteButton";
+import { BottomBarProps } from "./types";
 
-const BottomBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
-  const { matrix, removeCol } = useTableContext();
+const DeleteColButton: FC<{ columnIndex: number }> = ({ columnIndex }) => {
+  const { removeCol } = useTableContext();
 
-  const percentile = useMemo(
-    () =>
-      matrix.at(0).map(
-        (_, colIndex) =>
-          matrix.reduce((acc, row) => {
-            return acc + row[colIndex].amount;
-          }, 0) / 2,
-      ),
-    [matrix],
+  return <DeleteButton onClick={() => removeCol(columnIndex)} title="delete column" />;
+};
+
+const BottomBar: FC<BottomBarProps> = ({ matrix, ref }) => {
+  const percentile = matrix.at(0).map(
+    (_, colIndex) =>
+      matrix.reduce((acc, row) => {
+        return acc + row[colIndex].amount;
+      }, 0) / 2,
   );
 
   return (
@@ -30,7 +29,7 @@ const BottomBar: FC<{ ref: VirtualGridRef }> = ({ ref }) => {
       cellRenderer={({ columnIndex, style }) => (
         <Cell style={style} border="right">
           {percentile[columnIndex]}
-          <DeleteButton onClick={() => removeCol(columnIndex)} title="delete column" />
+          <DeleteColButton columnIndex={columnIndex} />
         </Cell>
       )}
     />
