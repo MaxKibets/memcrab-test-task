@@ -20,10 +20,12 @@ const HighlightedCell: FC<HighlightedCellProps> = ({
   const { nearests, calculateNearest, setNearests } = useNearestHighlightContext();
 
   const percent = useMemo(() => {
-    if (highlightedRow !== rowIndex) return 0;
+    if (highlightedRow !== rowIndex) return "0";
 
-    return Math.floor(
-      (amount / Math.max(...matrix[rowIndex].map(({ amount }) => amount))) * 100,
+    return (
+      Math.floor(
+        (amount / Math.max(...matrix[rowIndex].map(({ amount }) => amount))) * 100,
+      ) + "%"
     );
   }, [highlightedRow]);
 
@@ -39,7 +41,7 @@ const HighlightedCell: FC<HighlightedCellProps> = ({
       }
       onMouseLeave={() => setNearests(null)}
       highlighted={highlightedRow === rowIndex || nearests?.has(id)}
-      style={{ ...style, filter: `saturate(${percent}%)` }}
+      style={{ ...style, filter: `saturate(${percent})` }}
       {...props}
     >
       {percent || children}

@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import clsx from "clsx";
 
 import { CellProps } from "@/types";
 
@@ -18,7 +19,7 @@ const Cell: FC<CellProps> = ({
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
     style={style}
-    className={`${css.cell} ${css[border] || ""} ${highlighted ? css.highlighted : ""}`}
+    className={clsx(css.cell, css[border], { [css.highlighted]: highlighted })}
   >
     {children}
   </div>
