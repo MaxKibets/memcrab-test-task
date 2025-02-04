@@ -1,12 +1,14 @@
 import React, { createContext, FC, ReactNode, useState } from "react";
 
-export const RowHighlightContext = createContext(null);
+import { HighlightedRow, RowHighlightContextProps } from "./types";
+
+export const RowHighlightContext = createContext<RowHighlightContextProps>(null);
 
 export const RowHighlightProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [highlightedRow, sethighlightedRow] = useState(null);
+  const [highlightedRow, setHighlightedRow] = useState<HighlightedRow>(null);
 
   return (
-    <RowHighlightContext.Provider value={{ highlightedRow, sethighlightedRow }}>
+    <RowHighlightContext.Provider value={{ highlightedRow, setHighlightedRow }}>
       {children}
     </RowHighlightContext.Provider>
   );

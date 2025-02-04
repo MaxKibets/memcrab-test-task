@@ -9,13 +9,13 @@ import { useRowHighlightContext } from "../rowHighlightContext/hooks";
 
 const DeleteRowButton: FC<{ rowIndex: number }> = ({ rowIndex }) => {
   const { removeRow } = useTableContext();
-  const { sethighlightedRow } = useRowHighlightContext();
+  const { setHighlightedRow } = useRowHighlightContext();
 
   return (
     <DeleteButton
       onClick={() => {
         removeRow(rowIndex);
-        sethighlightedRow(null);
+        setHighlightedRow(null);
       }}
       title="delete row"
     />

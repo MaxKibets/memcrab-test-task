@@ -5,12 +5,12 @@ import { useRowHighlightContext } from "../rowHighlightContext/hooks";
 import { SumCellProps } from "./types";
 
 const SumCell: FC<SumCellProps> = ({ rowIndex, children, ...props }) => {
-  const { sethighlightedRow } = useRowHighlightContext();
+  const { setHighlightedRow } = useRowHighlightContext();
 
   return (
     <Cell
-      onMouseEnter={() => sethighlightedRow(rowIndex)}
-      onMouseLeave={() => sethighlightedRow(null)}
+      onMouseEnter={() => setHighlightedRow(rowIndex)}
+      onMouseLeave={() => setHighlightedRow(null)}
       border="bottom"
       {...props}
     >

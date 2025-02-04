@@ -2,10 +2,12 @@ import React, { createContext, FC, ReactNode, useState } from "react";
 
 import { Cell, Matrix } from "@/types";
 
-export const NearestHighlightContext = createContext(null);
+import { NearestHighlightContextProps, Nearests } from "./types";
+
+export const NearestHighlightContext = createContext<NearestHighlightContextProps>(null);
 
 export const NearestHighlightProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [nearests, setNearests] = useState(null);
+  const [nearests, setNearests] = useState<Nearests>(null);
 
   const calculateNearest = ({
     matrix,
